@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css'
-import { Menu, Icon } from 'antd';
-const MenuItemGroup = Menu.ItemGroup;
+import { Menu, Icon, Card, Col} from 'antd';
+import { Layout } from 'antd';
+import burger from './img/burger.jpg';
+const { Sider, Content } = Layout;
 
 class App extends Component {
 
@@ -32,6 +34,54 @@ class App extends Component {
             <Icon type="user" />Sign Up
           </Menu.Item>
         </Menu>
+        <Card title='Burger 13' extra={<a href="#">More</a>} style={{ 
+          maxWidth: 800, 
+          width: '100%', 
+          margin: '10px auto',
+          }}>
+          <Layout>
+            <Sider>
+              <div className="custom-image">
+                <img alt="example" width="100%" src={burger} />
+              </div>
+            </Sider>
+            <Content style={{padding: 10}}>
+              <h2>American Grub with a Contempoary Twist</h2>
+            </Content>
+          </Layout>
+        </Card>
+        <Card title='Burger 13' extra={<a href="#">More</a>} style={{ 
+          maxWidth: 800, 
+          width: '100%', 
+          margin: '10px auto',
+          }}>
+          <Layout>
+            <Sider>
+              <div className="custom-image">
+                <img alt="example" width="100%" src={burger} />
+              </div>
+            </Sider>
+            <Content style={{padding: 10}}>
+              <h2>American Grub with a Contempoary Twist</h2>
+            </Content>
+          </Layout>
+        </Card>
+        <Card title='Burger 13' extra={<a href="#">More</a>} style={{ 
+          maxWidth: 800, 
+          width: '100%', 
+          margin: '10px auto',
+          }}>
+          <Layout>
+            <Sider>
+              <div className="custom-image">
+                <img alt="example" width="100%" src={burger} />
+              </div>
+            </Sider>
+            <Content style={{padding: 10}}>
+              <h2>American Grub with a Contempoary Twist</h2>
+            </Content>
+          </Layout>
+        </Card>
       </div>
     );
   }
