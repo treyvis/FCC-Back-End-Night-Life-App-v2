@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import 'antd/dist/antd.css'
+import { Menu, Icon } from 'antd';
+const MenuItemGroup = Menu.ItemGroup;
 
 class App extends Component {
+
+  state = {
+    current: 'home',
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Menu
+          onClick={this.handleClick}
+          selectedKeys={[this.state.current]}
+          mode="horizontal">
+          <Menu.Item key="home" style={{fontSize: 24}}>
+            <Icon type="like" />Night Life App | Salt Lake City
+          </Menu.Item>
+          <Menu.Item key="search">
+            <Icon type="search" />Search
+          </Menu.Item>
+          <Menu.Item key="login">
+            <Icon type="login" />Login
+          </Menu.Item>
+          <Menu.Item key="logout">
+            <Icon type="logout" />Search
+          </Menu.Item>
+          <Menu.Item key="signup">
+            <Icon type="user" />Sign Up
+          </Menu.Item>
+        </Menu>
       </div>
     );
   }
