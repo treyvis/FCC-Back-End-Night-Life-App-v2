@@ -3,6 +3,7 @@ import 'antd/dist/antd.css'
 import { Menu, Icon, Card, Col} from 'antd';
 import { Layout } from 'antd';
 import burger from './img/burger.jpg';
+import Nav from './Components/Nav.js';
 const { Sider, Content } = Layout;
 
 class App extends Component {
@@ -14,26 +15,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Menu
-          onClick={this.handleClick}
-          selectedKeys={[this.state.current]}
-          mode="horizontal">
-          <Menu.Item key="home" style={{fontSize: 24}}>
-            <Icon type="like" />Night Life App | Salt Lake City
-          </Menu.Item>
-          <Menu.Item key="search">
-            <Icon type="search" />Search
-          </Menu.Item>
-          <Menu.Item key="login">
-            <Icon type="login" />Login
-          </Menu.Item>
-          <Menu.Item key="logout">
-            <Icon type="logout" />Search
-          </Menu.Item>
-          <Menu.Item key="signup">
-            <Icon type="user" />Sign Up
-          </Menu.Item>
-        </Menu>
+        <Nav />
         <Card title='Burger 13' extra={<a href="#">More</a>} style={{ 
           maxWidth: 800, 
           width: '100%', 
