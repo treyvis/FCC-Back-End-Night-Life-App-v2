@@ -14,7 +14,9 @@ class Nav extends Component {
         selectedKeys={[this.state.current]}
         mode="horizontal">
         <Menu.Item key="home" style={{fontSize: 24}}>
-          <Icon type="like" />Night Life App | Salt Lake City
+          <Link to='/'>
+          <Icon type="like" /> 
+            Night Life App | Salt Lake City</Link> 
         </Menu.Item>
         <Menu.Item >
           <Search placeholder="Search here!" style={{width: 300}} />
