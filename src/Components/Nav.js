@@ -22,7 +22,7 @@ class Nav extends Component {
           <Search placeholder="Search here!" style={{width: 300}} />
         </Menu.Item>
         <Menu.Item key="login">
-          <Icon type="login" />Login
+          <Link to='/login'><Icon type="login" />Login</Link>
         </Menu.Item>
         <Menu.Item key="logout">
           <Icon type="logout" />Logout

@@ -6,6 +6,7 @@ import burger from './img/burger.jpg';
 import Nav from './Components/Nav.js';
 import List from './Components/List.js';
 import Signup from './Components/Signup.js';
+import Login from './Components/Login.js';
 const { Sider, Content } = Layout;
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
         <div className="App">
           <Nav />
           <Switch>
+            <Route path='/login' component={ Login } />
             <Route path='/signup' component={ Signup } />
             <Route exact path='/' component={ List } />
           </Switch>
