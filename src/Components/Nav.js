@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Menu, Icon, Card, Col} from 'antd';
+import { Menu, Icon, Card, Col, Input} from 'antd';
+const Search = Input.Search;
 
 class Nav extends Component {
   state = {
@@ -14,14 +15,14 @@ class Nav extends Component {
         <Menu.Item key="home" style={{fontSize: 24}}>
           <Icon type="like" />Night Life App | Salt Lake City
         </Menu.Item>
-        <Menu.Item key="search">
-          <Icon type="search" />Search
+        <Menu.Item >
+          <Search placeholder="Search here!" style={{width: 300}} />
         </Menu.Item>
         <Menu.Item key="login">
           <Icon type="login" />Login
         </Menu.Item>
         <Menu.Item key="logout">
-          <Icon type="logout" />Search
+          <Icon type="logout" />Logout
         </Menu.Item>
         <Menu.Item key="signup">
           <Icon type="user" />Sign Up
