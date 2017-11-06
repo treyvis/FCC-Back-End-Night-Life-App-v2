@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Icon, Card, Col, Input} from 'antd';
+import { Menu, Icon, Input} from 'antd';
 const Search = Input.Search;
 
 class Nav extends Component {
@@ -16,7 +16,7 @@ class Nav extends Component {
         <Menu.Item key="home" style={{fontSize: 24}}>
           <Link to='/'>
           <Icon type="like" /> 
-            Night Life App | Salt Lake City</Link> 
+            Night Life App</Link> 
         </Menu.Item>
         <Menu.Item >
           <Search placeholder="Search here!" style={{width: 300}} />

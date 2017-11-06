@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import 'antd/dist/antd.css'
-import { Layout } from 'antd';
-import burger from './img/burger.jpg';
 import Nav from './Components/Nav.js';
 import List from './Components/List.js';
 import Signup from './Components/Signup.js';
 import Login from './Components/Login.js';
-const { Sider, Content } = Layout;
+import api from './Logic/api.js';
 
 class App extends Component {
 
@@ -16,6 +14,8 @@ class App extends Component {
   }
 
   render() {
+    console.log(api.getUser());
+    console.log(api.init());
     return (
       <BrowserRouter>
         <div className="App">

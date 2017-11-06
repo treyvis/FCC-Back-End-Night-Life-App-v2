@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import burger from '../img/burger.jpg';
-import { Layout } from 'antd';
-import { Menu, Icon, Card, Col} from 'antd';
+import { Layout, Card } from 'antd';
 const { Sider, Content } = Layout;
 
 class List extends Component {
