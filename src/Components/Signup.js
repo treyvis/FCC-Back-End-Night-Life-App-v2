@@ -4,17 +4,33 @@ import { Link } from 'react-router-dom';
 const FormItem = Form.Item;
 
 class Signup extends Component {
+
+  state = {
+    name: '',
+    email: '',
+    pasword: ''
+  };
+
+  onChange = (value, key) => {
+    const state = this.state;
+    state[key] = value;
+    this.setState(state);
+  }
+
   render() {
     return (
       <Form className="login-form" style={{maxWidth: 300, margin: '20px auto'}}>
         <FormItem>
-            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Name" />
+            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Name" 
+              onChange={(e) => {this.onChange(e.target.value, 'name')}} value={this.state.name}/>
         </FormItem>
         <FormItem>
-            <Input prefix={<Icon type="idcard" style={{ fontSize: 13 }} />} placeholder="Email" />
+            <Input prefix={<Icon type="idcard" style={{ fontSize: 13 }} />} placeholder="Email" 
+              onChange={(e) => {this.onChange(e.target.value, 'email')}} value={this.state.email}/>
         </FormItem>
         <FormItem>
-            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
+            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" 
+              onChange={(e) => {this.onChange(e.target.value, 'password')}} value={this.state.password}/>
         </FormItem>
         <FormItem>
           <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
