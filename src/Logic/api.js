@@ -7,6 +7,15 @@ const api = {
   },
   init: () => {
     return firebase.initializeApp(config);
+  },
+  createUserEmail: (name ,email, password) => {
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(function(error) {
+      console.error(error.code, error.message);
+    });
   }
 }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button} from 'antd';
 import { Link } from 'react-router-dom';
+import api from '../Logic/api.js';
 const FormItem = Form.Item;
 
 class Signup extends Component {
@@ -15,6 +16,10 @@ class Signup extends Component {
     const state = this.state;
     state[key] = value;
     this.setState(state);
+  }
+
+  onSubmit = () => {
+    api.createUserEmail(this.state.name, this.state.email, this.state.password);
   }
 
   render() {
@@ -33,7 +38,8 @@ class Signup extends Component {
               onChange={(e) => {this.onChange(e.target.value, 'password')}} value={this.state.password}/>
         </FormItem>
         <FormItem>
-          <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
+          <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}
+            onClick={this.onSubmit}>
             Sign Up!
           </Button>
           Or <Link to='/login'>login!</Link>
