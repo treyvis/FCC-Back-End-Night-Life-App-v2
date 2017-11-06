@@ -13,9 +13,12 @@ class App extends Component {
     current: 'home',
   }
 
+  componentWillMount() {
+    api.init();
+  }
+
   render() {
     console.log(api.getUser());
-    console.log(api.init());
     return (
       <BrowserRouter>
         <div className="App">
