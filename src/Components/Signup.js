@@ -19,7 +19,11 @@ class Signup extends Component {
   }
 
   onSubmit = () => {
-    api.createUserEmail(this.state.name, this.state.email, this.state.password);
+    api.createUserEmail(this.state.name, this.state.email, this.state.password).then(res => {
+      console.log(res);
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   render() {

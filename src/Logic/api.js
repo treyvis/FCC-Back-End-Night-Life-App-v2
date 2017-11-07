@@ -1,5 +1,6 @@
 import config from './config.js';
 import firebase from 'firebase';
+import 'firebase/firestore';
 
 const api = {
   getUser: () => {
@@ -9,12 +10,27 @@ const api = {
     return firebase.initializeApp(config);
   },
   createUserEmail: (name ,email, password) => {
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(res => {
-      console.log(res);
-    })
-    .catch(function(error) {
-      console.error(error.code, error.message);
+    return new Promise( (resolve, reject) => {
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(res => {
+        console.log(res.uid);
+        firebase.firestore().collection('users').doc(res.uid).set({
+          uid: res.uid,
+          email: email,
+          name: name,
+          registration: Date.now()
+        })
+        .then(() => {
+          resolve('User added');
+        })
+        .catch((error) => {
+          reject(error);
+        });
+      })
+      .catch(function(error) {
+        console.error(error.code, error.message);
+        reject(error);
+      });
     });
   }
 }
