@@ -32,6 +32,9 @@ const api = {
         reject(error);
       });
     });
+  },
+  logout: () => {
+    return firebase.auth().signOut();
   }
 }
 

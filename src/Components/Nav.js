@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Icon, Input} from 'antd';
+import api from '../Logic/api.js';
 const Search = Input.Search;
 
 class Nav extends Component {
   state = {
     current: 'home'
+  }
+
+  logout = () => {
+    console.log('logout called');
+    console.log(api.logout());
   }
 
   render() {
@@ -25,7 +31,7 @@ class Nav extends Component {
           <Link to='/login'><Icon type="login" />Login</Link>
         </Menu.Item>
         <Menu.Item key="logout">
-          <Icon type="logout" />Logout
+          <div onClick={this.logout}><Icon type="logout" />Logout</div>
         </Menu.Item>
         <Menu.Item key="signup"><Link to='/signup'>
           <Icon type="user" />Sign Up</Link>
