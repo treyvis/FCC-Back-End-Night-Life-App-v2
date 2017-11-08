@@ -13,7 +13,7 @@ class Signup extends Component {
   };
 
   onChange = (value, key) => {
-    const state = this.state;
+    let state = this.state;
     state[key] = value;
     this.setState(state);
   }

@@ -33,6 +33,9 @@ const api = {
       });
     });
   },
+  loginUserEmail: (email, password) => {
+    return firebase.auth().signInWithEmailAndPassword(email, password);
+  },
   logout: () => {
     return firebase.auth().signOut();
   }
