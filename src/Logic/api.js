@@ -10,7 +10,7 @@ const api = {
     return firebase.initializeApp(config);
   },
   createUserEmail: (name ,email, password) => {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(res => {
         console.log(res.uid);
@@ -38,6 +38,17 @@ const api = {
   },
   logout: () => {
     return firebase.auth().signOut();
+  },
+  getUser: () => {
+    return new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          resolve(user);
+        } else {
+          reject(null);
+        }
+      })
+    });
   }
 }
 
