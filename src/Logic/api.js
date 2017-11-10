@@ -3,9 +3,6 @@ import firebase from 'firebase';
 import 'firebase/firestore';
 
 const api = {
-  getUser: () => {
-    return 'Returning user';
-  },
   init: () => {
     return firebase.initializeApp(config);
   },
@@ -43,9 +40,17 @@ const api = {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          resolve(user);
+          firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+              resolve(doc.data());
+            } else {
+              reject('User not found in users collection');
+            }
+          }).catch(err => {
+            reject(err);
+          });
         } else {
-          reject(null);
+          reject('No user logged in');
         }
       })
     });
