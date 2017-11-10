@@ -20,6 +20,7 @@ class Login extends Component {
   onSubmit = () => {
     api.loginUserEmail(this.state.email, this.state.password).then(res => {
       console.log(res);
+      window.location = '/';
     }).catch(error => {
       console.log(error.code, error.message);
     })

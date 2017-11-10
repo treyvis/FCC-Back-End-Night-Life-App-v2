@@ -6,12 +6,25 @@ const Search = Input.Search;
 
 class Nav extends Component {
   state = {
-    current: 'home'
+    current: 'home',
+    email: ''
+  }
+
+  componentWillMount() {
+    api.getUser().then(res => {
+      console.log(res);
+      this.setState({email: res.email});
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   logout = () => {
     console.log('logout called');
-    console.log(api.logout());
+    console.log(api.logout().then(() => {
+      this.setState({email: ''});
+      window.location = '/login';
+    }));
   }
 
   render() {
@@ -27,15 +40,36 @@ class Nav extends Component {
         <Menu.Item >
           <Search placeholder="Search here!" style={{width: 300}} />
         </Menu.Item>
-        <Menu.Item key="login">
-          <Link to='/login'><Icon type="login" />Login</Link>
-        </Menu.Item>
-        <Menu.Item key="logout">
-          <div onClick={this.logout}><Icon type="logout" />Logout</div>
-        </Menu.Item>
-        <Menu.Item key="signup"><Link to='/signup'>
-          <Icon type="user" />Sign Up</Link>
-        </Menu.Item>
+        {(() => {
+          if (this.state.email) {
+            return (
+              <Menu.Item key="logout">
+                <div onClick={this.logout}><Icon type="logout" />Logout</div>
+              </Menu.Item>
+            );
+          } else {
+            return(
+              <Menu.Item key="login">
+                <Link to='/login'><Icon type="login" />Login</Link>
+              </Menu.Item>
+            );
+          }
+        })()}
+        {(() => {
+          if (this.state.email) {
+            return (
+              <Menu.Item key="loggedInUser">
+                <Icon type="user" />{this.state.email}
+              </Menu.Item>
+            );
+          } else {
+            return(
+              <Menu.Item key="signup"><Link to='/signup'>
+                <Icon type="user" />Sign Up</Link>
+              </Menu.Item>
+            );
+          }
+        })()}
       </Menu>
     );
   }

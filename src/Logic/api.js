@@ -50,7 +50,7 @@ const api = {
             reject(err);
           });
         } else {
-          reject('No user logged in');
+          resolve('No user logged in');
         }
       })
     });

@@ -17,16 +17,6 @@ class App extends Component {
     api.init();
   }
 
-  componentDidMount() {
-    api.getUser().then( res => {
-      console.log('User signed in');
-      console.log(res);
-    }).catch( err => {
-      console.log('User not signe in');
-      console.log(err);
-    })
-  }
-
   render() {
     console.log(api.getUser());
     return (
