@@ -11,6 +11,8 @@ class App extends Component {
 
   state = {
     current: 'home',
+    search: 'Salt Lake City',
+    restaurants: []
   }
 
   componentWillMount() {
@@ -18,12 +20,16 @@ class App extends Component {
     api.getRestaurants('Salt Lake City');
   }
 
+  onSearch = (search) => {
+
+  }
+
   render() {
     console.log(api.getUser());
     return (
       <BrowserRouter>
         <div className="App">
-          <Nav />
+          <Nav search={this.state.search}  />
           <Switch>
             <Route path='/login' component={ Login } />
             <Route path='/signup' component={ Signup } />

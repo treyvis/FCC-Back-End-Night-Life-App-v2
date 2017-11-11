@@ -11,6 +11,7 @@ class Nav extends Component {
   }
 
   componentWillMount() {
+  	console.log(this.props.search);
     api.getUser().then(res => {
       console.log(res);
       this.setState({email: res.email});
