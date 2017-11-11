@@ -15,6 +15,7 @@ class App extends Component {
 
   componentWillMount() {
     api.init();
+    api.getRestaurants('Salt Lake City');
   }
 
   render() {

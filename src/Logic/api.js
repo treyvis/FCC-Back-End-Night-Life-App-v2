@@ -1,11 +1,14 @@
 import config from './config.js';
 import firebase from 'firebase';
+import axios from 'axios';
 import 'firebase/firestore';
 
 const api = {
+
   init: () => {
     return firebase.initializeApp(config);
   },
+
   createUserEmail: (name ,email, password) => {
     return new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -30,12 +33,15 @@ const api = {
       });
     });
   },
+
   loginUserEmail: (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   },
+
   logout: () => {
     return firebase.auth().signOut();
   },
+
   getUser: () => {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged(user => {
@@ -54,6 +60,14 @@ const api = {
         }
       })
     });
+  },
+
+  getRestaurants: (search) => {
+    axios.get('http://localhost:3001/api/' + search).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.error(err);
+    })
   }
 }
 
