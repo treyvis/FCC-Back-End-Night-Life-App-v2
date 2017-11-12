@@ -17,7 +17,12 @@ class App extends Component {
 
   componentWillMount() {
     api.init();
-    api.getRestaurants('Salt Lake City');
+    api.getRestaurants('Salt Lake City').then( res => {
+      console.log(res);
+      this.setState({restaurants: res.data});
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   onSearch = (search) => {
@@ -25,7 +30,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(api.getUser());
+    console.log('Render called');
     return (
       <BrowserRouter>
         <div className="App">
@@ -33,7 +38,9 @@ class App extends Component {
           <Switch>
             <Route path='/login' component={ Login } />
             <Route path='/signup' component={ Signup } />
-            <Route exact path='/' component={ List } />
+            <Route exact path='/' render={(props) => {
+               return (<List {...props} restaurants={this.state.restaurants} />);
+            }} />
           </Switch>
         </div>
       </BrowserRouter>

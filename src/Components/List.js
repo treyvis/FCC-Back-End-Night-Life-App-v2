@@ -13,10 +13,10 @@ class List extends Component {
           margin: '10px auto',
           }}>
           <Layout>
-            <Sider style={{height: '200px',width: '200px', overflow: 'hidden'}}>
+            <Sider >
               <div className="custom-image" style={{
                 background: 'url(https://s3-media1.fl.yelpcdn.com/bphoto/jmEG0-ADjgmRDYulOIXusg/o.jpg) center / cover no-repeat',
-                width: '300px',
+                width: '100%',
                 height: '200px'
               }}></div>
             </Sider>

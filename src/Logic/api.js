@@ -63,11 +63,7 @@ const api = {
   },
 
   getRestaurants: (search) => {
-    axios.get('http://localhost:3001/api/' + search).then(res => {
-      console.log(res);
-    }).catch(err => {
-      console.error(err);
-    })
+    return axios.get('http://localhost:3001/api/' + search);
   }
 }
 
