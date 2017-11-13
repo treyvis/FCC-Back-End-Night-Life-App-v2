@@ -63,7 +63,36 @@ const api = {
   },
 
   getRestaurants: (search) => {
-    return axios.get('http://localhost:3001/api/' + search); //Make this set the user's last search
+    return axios.get('http://localhost:3001/api/' + search);
+  },
+
+  onSearch: function(search) {
+    if (search) {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          firebase.firestore().collection('users').doc(user.uid).update({search: search}).then(res => {
+            console.log('Search saved');
+            console.log(res);
+          })
+        } else {
+          console.log('No user logged in');
+        }
+      });
+
+      return this.getRestaurants(search);
+    }
+  },
+
+  loadSearch: function() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
+
+        });
+      } else {
+
+      }
+    });
   }
 }
 

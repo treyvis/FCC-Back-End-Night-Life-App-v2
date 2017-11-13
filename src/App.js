@@ -17,24 +17,20 @@ class App extends Component {
 
   componentWillMount() {
     api.init();
-    api.getRestaurants(this.state.search).then( res => {
-      console.log(res);
-      this.setState({restaurants: res.data});
-    }).catch(err => {
-      console.log(err);
-    });
   }
 
   onSearch = (search) => {
-    api.getRestaurants(search).then( res => {
-      console.log('New search', search);
-      this.setState({
-        search: search,
-        restaurants: res.data
+    if (search) {
+      api.onSearch(search).then( res => {
+        console.log('New search', search);
+        this.setState({
+          search: search,
+          restaurants: res.data
+        });
+      }).catch( err => {
+        console.log(err);
       });
-    }).catch( err => {
-      console.log(err);
-    });
+    }
   }
 
   render() {
