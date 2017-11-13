@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import burger from '../img/burger.jpg';
-import { Layout, Card } from 'antd';
+import { Layout, Card, Input } from 'antd';
+const Search = Input.Search;
 const { Sider, Content } = Layout;
 
 class List extends Component {
@@ -38,6 +39,17 @@ class List extends Component {
 
     return (
       <div>
+        <Card style={{ 
+          maxWidth: 800, 
+          width: '100%', 
+          margin: '10px auto',
+          }}>
+          <h1>Search for restaurants in your city:</h1>
+          <Search
+            defaultValue={this.props.search}
+            onSearch={value => {this.props.onSearch(value)}}
+          />
+        </Card>
         {restaurantCards}
       </div>
     );

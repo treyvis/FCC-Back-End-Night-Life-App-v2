@@ -11,13 +11,13 @@ class App extends Component {
 
   state = {
     current: 'home',
-    search: 'Salt Lake City',
+    search: '',
     restaurants: []
   }
 
   componentWillMount() {
     api.init();
-    api.getRestaurants('Salt Lake City').then( res => {
+    api.getRestaurants(this.state.search).then( res => {
       console.log(res);
       this.setState({restaurants: res.data});
     }).catch(err => {
@@ -26,7 +26,15 @@ class App extends Component {
   }
 
   onSearch = (search) => {
-
+    api.getRestaurants(search).then( res => {
+      console.log('New search', search);
+      this.setState({
+        search: search,
+        restaurants: res.data
+      });
+    }).catch( err => {
+      console.log(err);
+    });
   }
 
   render() {
@@ -34,12 +42,17 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <Nav search={this.state.search}  />
+          <Nav />
           <Switch>
             <Route path='/login' component={ Login } />
             <Route path='/signup' component={ Signup } />
             <Route exact path='/' render={(props) => {
-               return (<List {...props} restaurants={this.state.restaurants} />);
+              return (
+                <List {...props} 
+                  restaurants={this.state.restaurants} 
+                  search={this.state.search} 
+                  onSearch={this.onSearch}/>
+              );
             }} />
           </Switch>
         </div>

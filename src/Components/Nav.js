@@ -11,9 +11,8 @@ class Nav extends Component {
   }
 
   componentWillMount() {
-  	console.log(this.props.search);
     api.getUser().then(res => {
-      console.log(res);
+      //console.log(res);
       this.setState({email: res.email});
     }).catch(err => {
       console.log(err);
@@ -37,9 +36,6 @@ class Nav extends Component {
           <Link to='/'>
           <Icon type="like" /> 
             Night Life App</Link> 
-        </Menu.Item>
-        <Menu.Item >
-          <Search placeholder="Search here!" style={{width: 300}} />
         </Menu.Item>
         {(() => {
           if (this.state.email) {
