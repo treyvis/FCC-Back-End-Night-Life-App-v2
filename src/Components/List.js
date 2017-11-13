@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import burger from '../img/burger.jpg';
+import PropTypes from 'prop-types';
 import { Layout, Card, Input } from 'antd';
 const Search = Input.Search;
 const { Sider, Content } = Layout;
@@ -54,6 +54,12 @@ class List extends Component {
       </div>
     );
   }
+}
+
+List.propTypes = {
+  search: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  restaurants: PropTypes.array.isRequired
 }
 
 export default List;

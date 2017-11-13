@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Icon, Input} from 'antd';
+import { Menu, Icon } from 'antd';
 import api from '../Logic/api.js';
-const Search = Input.Search;
 
 class Nav extends Component {
   state = {

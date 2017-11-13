@@ -63,7 +63,7 @@ const api = {
   },
 
   getRestaurants: (search) => {
-    return axios.get('http://localhost:3001/api/' + search);
+    return axios.get('http://localhost:3001/api/' + search); //Make this set the user's last search
   }
 }
 
