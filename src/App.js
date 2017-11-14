@@ -19,6 +19,15 @@ class App extends Component {
     api.init();
   }
 
+  componentDidMount() {
+    api.loadSearch().then(res => {
+      console.log(res);
+      this.setState({restaurants: res});
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+
   onSearch = (search) => {
     if (search) {
       api.onSearch(search).then( res => {

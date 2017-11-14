@@ -84,14 +84,25 @@ const api = {
   },
 
   loadSearch: function() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
-
-        });
-      } else {
-
-      }
+    return new Promise ((resolve, reject) => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+              console.log(doc.data()['search']);
+              this.getRestaurants(doc.data()['search']).then( res => {
+                resolve(res.data);
+              }).catch( err => {
+                reject(err);
+              });
+            } else {
+              reject('User not in database');
+            }
+          });
+        } else {
+          resolve([]);
+        }
+      });
     });
   }
 }
