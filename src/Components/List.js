@@ -8,6 +8,8 @@ class List extends Component {
   render() {
     console.log('Restaurants',this.props.restaurants.length);
 
+    const search = this.props.search;
+
     const restaurantCards = this.props.restaurants.map(restaurant => {
       return (
         <Card title={restaurant.name} key={restaurant.id} extra={<a href={restaurant.url} target='_blank'>See in Yelp</a>} style={{ 
@@ -46,8 +48,9 @@ class List extends Component {
           }}>
           <h1>Search for restaurants in your city:</h1>
           <Search
-            defaultValue={this.props.search}
+            value={this.props.search}
             onSearch={value => {this.props.onSearch(value)}}
+            onChange={(e) => {this.props.onSearchChange(e.target.value);}}
           />
         </Card>
         {restaurantCards}
@@ -57,7 +60,6 @@ class List extends Component {
 }
 
 List.propTypes = {
-  search: PropTypes.string.isRequired,
   onSearch: PropTypes.func.isRequired,
   restaurants: PropTypes.array.isRequired
 }

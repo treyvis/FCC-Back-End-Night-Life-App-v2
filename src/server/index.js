@@ -14,7 +14,10 @@ app.get('/api/:location', (req,res) => {
   console.log('API pinged with', req.params.location);
   yelp.get('https://api.yelp.com/v3/businesses/search?term=food&limit=5&location=' + req.params.location)
   .then(data => {
-    res.json(data.data.businesses);
+    res.json({
+      data: data.data.businesses,
+      search: req.params.location
+    });
   }).catch(err => {
   console.error(err);
   })

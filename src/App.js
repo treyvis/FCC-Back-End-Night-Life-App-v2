@@ -22,7 +22,10 @@ class App extends Component {
   componentDidMount() {
     api.loadSearch().then(res => {
       console.log(res);
-      this.setState({restaurants: res});
+      this.setState({
+        restaurants: res.data,
+        search: res.search
+      });
     }).catch(err => {
       console.log(err);
     });
@@ -32,14 +35,19 @@ class App extends Component {
     if (search) {
       api.onSearch(search).then( res => {
         console.log('New search', search);
+        console.log(res);
         this.setState({
           search: search,
-          restaurants: res.data
+          restaurants: res.data.data
         });
       }).catch( err => {
         console.log(err);
       });
     }
+  }
+
+  onSearchChange = (search) => {
+    this.setState({search});
   }
 
   render() {
@@ -56,7 +64,8 @@ class App extends Component {
                 <List {...props} 
                   restaurants={this.state.restaurants} 
                   search={this.state.search} 
-                  onSearch={this.onSearch}/>
+                  onSearch={this.onSearch}
+                  onSearchChange={this.onSearchChange}/>
               );
             }} />
           </Switch>
