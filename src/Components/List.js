@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Layout, Card, Input } from 'antd';
+import { Layout, Card, Input, Row, Col, Icon, Button } from 'antd';
 const Search = Input.Search;
 const { Sider, Content } = Layout;
 
@@ -26,13 +26,33 @@ class List extends Component {
               }}></div>
             </Sider>
             <Content style={{padding: 10}}>
-              <h3>{restaurant.location.display_address[0]}</h3>
-              <h3>{restaurant.location.display_address[1]}</h3>
-              <h3>{restaurant.display_phone}</h3>
-              <br/>
-              <h3>{restaurant.price}</h3>
-              <br/>
-              <h3>{restaurant.rating}</h3>
+              <h3>
+                <Icon type='home' style={{marginRight: '7px'}}/>
+                {restaurant.location.display_address[0]}
+              </h3>
+              <h3>
+                <Icon type='home' style={{marginRight: '7px',visibility: 'hidden'}}/>
+                {restaurant.location.display_address[1]}
+              </h3>
+              <h3>
+                <Icon type='phone' style={{marginRight: '7px'}} />
+                {restaurant.display_phone}
+              </h3>
+              <h3>
+                <Icon type='shop' style={{marginRight: '7px'}} />
+                {restaurant.price}
+              </h3>
+              <h3>
+                <Icon type='smile' style={{marginRight: '7px'}} />
+                {restaurant.rating}
+              </h3>
+              <h3>
+                <Icon type='team' style={{marginRight: '7px'}}/>
+                {'12'} going tonight {'(including you)'}!
+                <br/>
+                <Button type="primary">Going!</Button>
+                <Button type="danger">Not Going!</Button>
+              </h3>
             </Content>
           </Layout>
         </Card>
