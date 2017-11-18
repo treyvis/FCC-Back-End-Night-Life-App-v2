@@ -9,6 +9,7 @@ class List extends Component {
     console.log('Restaurants',this.props.restaurants.length);
 
     const restaurantCards = this.props.restaurants.map(restaurant => {
+      console.log(restaurant);
       return (
         <Card title={restaurant.name} key={restaurant.id} extra={<a href={restaurant.url} target='_blank'>See in Yelp</a>} style={{ 
           maxWidth: 800, 
@@ -46,10 +47,15 @@ class List extends Component {
               </h3>
               <h3>
                 <Icon type='team' style={{marginRight: '7px'}}/>
-                {'12'} going tonight {'(including you)'}!
+                {restaurant.going ? restaurant.going.length : 0} going tonight{restaurant.userGoing ? ' (including you)' : ''}!
                 <br/>
-                <Button type="primary">Going!</Button>
-                <Button type="danger">Not Going!</Button>
+                {(() => {
+                  if (restaurant.userGoing) {
+                    return <Button type="danger">Not Going!</Button>;
+                  } else {
+                    return <Button type="primary">Going!</Button>;
+                  }
+                })()}
               </h3>
             </Content>
           </Layout>
