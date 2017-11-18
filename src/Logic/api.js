@@ -97,15 +97,23 @@ const api = {
                 for(const restaurant in res.data.data) {
                   console.log(res.data.data[restaurant].id);
                   firebase.firestore().collection('restaurants').doc(res.data.data[restaurant].id).get().then((doc) => {
-                    console.log(doc.data());
-                    callsMade++;
-                    goingRestaurants[restaurant].going = doc.data().going;
-                    console.log('callsMade', callsMade);
-                    if (callsMade === callsToMake) {
-                      console.log('Calls complete');
-                      console.log(goingRestaurants);
-                      resolve(res.data);
-                    }
+                      
+                      callsMade++;
+                      if (doc.exists) {
+                        console.log(doc.data());
+                        goingRestaurants[restaurant].going = doc.data().going;
+                        console.log()
+                        if (goingRestaurants[restaurant].going.indexOf(user.uid) !== -1) {
+                          goingRestaurants[restaurant].userGoing = true;
+                          console.log('user going');
+                        }
+                      }
+                      console.log('callsMade', callsMade);
+                      if (callsMade === callsToMake) {
+                        console.log('Calls complete');
+                        console.log(goingRestaurants);
+                        resolve(res.data);
+                      }
                   });
                 }
               }).catch( err => {
