@@ -85,13 +85,29 @@ const api = {
 
   loadSearch: function() {
     return new Promise ((resolve, reject) => {
-      firebase.auth().onAuthStateChanged(user => {
+      firebase.auth().onAuthStateChanged(user => { //refactor this to use getUser
         if (user) {
           firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
             if (doc.exists) {
-              console.log(doc.data()['search']);
+
               this.getRestaurants(doc.data()['search']).then( res => {
-                resolve(res.data);
+                const callsToMake = res.data.data.length;
+                let goingRestaurants = res.data.data;
+                let callsMade = 0;
+                for(const restaurant in res.data.data) {
+                  console.log(res.data.data[restaurant].id);
+                  firebase.firestore().collection('restaurants').doc(res.data.data[restaurant].id).get().then((doc) => {
+                    console.log(doc.data());
+                    callsMade++;
+                    goingRestaurants[restaurant].going = doc.data().going;
+                    console.log('callsMade', callsMade);
+                    if (callsMade === callsToMake) {
+                      console.log('Calls complete');
+                      console.log(goingRestaurants);
+                      resolve(res.data);
+                    }
+                  });
+                }
               }).catch( err => {
                 reject(err);
               });

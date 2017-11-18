@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Layout, Card, Input, Row, Col, Icon, Button } from 'antd';
+import { Layout, Card, Input, Icon, Button } from 'antd';
 const Search = Input.Search;
 const { Sider, Content } = Layout;
 
 class List extends Component {
   render() {
     console.log('Restaurants',this.props.restaurants.length);
-
-    const search = this.props.search;
 
     const restaurantCards = this.props.restaurants.map(restaurant => {
       return (
