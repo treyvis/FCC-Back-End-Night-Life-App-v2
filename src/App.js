@@ -37,8 +37,8 @@ class App extends Component {
         console.log('New search', search);
         console.log(res);
         this.setState({
-          search: search,
-          restaurants: res.data.data
+          search: res.search,
+          restaurants: res.data
         });
       }).catch( err => {
         console.log(err);

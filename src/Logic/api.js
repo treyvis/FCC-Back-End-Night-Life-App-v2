@@ -62,8 +62,45 @@ const api = {
     });
   },
 
-  getRestaurants: (search) => {
-    return axios.get('http://localhost:3001/api/' + search);
+  getRestaurants: function(search) {
+
+    return new Promise ((resolve, reject) => {
+      this.getUser().then(user => {
+        axios.get('http://localhost:3001/api/' + search).then(res => {
+          const callsToMake = res.data.data.length;
+          let goingRestaurants = res.data.data;
+          let callsMade = 0;
+          for(const restaurant in res.data.data) {
+            console.log(res.data.data[restaurant].id);
+            firebase.firestore().collection('restaurants').doc(res.data.data[restaurant].id).get().then((doc) => {
+                      
+                callsMade++;
+                if (doc.exists) {
+                  console.log(doc.data());
+                  goingRestaurants[restaurant].going = doc.data().going;
+                  if (user.uid && goingRestaurants[restaurant].going.indexOf(user.uid) !== -1) {
+                    goingRestaurants[restaurant].userGoing = true;
+                    console.log('user going');
+                  }
+                }
+                console.log('callsMade', callsMade);
+                if (callsMade === callsToMake) {
+                  console.log('Calls complete');
+                  console.log(goingRestaurants);
+                  resolve(res.data);
+                }
+            });
+          }
+        }).catch(err => {
+          reject(err);
+        });
+      }).catch(err => {
+        reject(err);
+      })
+    });
+
+
+
   },
 
   onSearch: function(search) {
@@ -90,7 +127,7 @@ const api = {
           firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
             if (doc.exists) {
 
-              this.getRestaurants(doc.data()['search']).then( res => {
+              axios.get('http://localhost:3001/api/' + doc.data()['search']).then( res => {
                 const callsToMake = res.data.data.length;
                 let goingRestaurants = res.data.data;
                 let callsMade = 0;
@@ -102,7 +139,6 @@ const api = {
                       if (doc.exists) {
                         console.log(doc.data());
                         goingRestaurants[restaurant].going = doc.data().going;
-                        console.log()
                         if (goingRestaurants[restaurant].going.indexOf(user.uid) !== -1) {
                           goingRestaurants[restaurant].userGoing = true;
                           console.log('user going');
