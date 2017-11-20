@@ -19,6 +19,12 @@ class App extends Component {
     api.init();
   }
 
+  goingSelected(restaurantId, restaurantIndex) {
+    //Going selection
+    //After going is successful pull again for specific restaurant
+    //Set state on restaurant state object
+  }
+
   componentDidMount() {
     api.loadSearch().then(res => {
       console.log(res);
