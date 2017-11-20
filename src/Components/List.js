@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Layout, Card, Input, Icon, Button } from 'antd';
+import api from '../Logic/api.js';
 const Search = Input.Search;
 const { Sider, Content } = Layout;
 
@@ -53,7 +54,7 @@ class List extends Component {
                   if (restaurant.userGoing) {
                     return <Button type="danger">Not Going!</Button>;
                   } else {
-                    return <Button type="primary">Going!</Button>;
+                    return <Button type="primary" onClick={() => { api.goingToRestaurant(restaurant.id)}}>Going!</Button>;
                   }
                 })()}
               </h3>

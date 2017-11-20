@@ -160,10 +160,47 @@ const api = {
             }
           });
         } else {
-          resolve([]);
+          resolve({
+            data: [],
+            search: ''
+          });
         }
       });
     });
+  },
+  goingToRestaurant: (restaurantId) => {
+    //check if user is logged in -> if no, then redirect to login
+    this.a.getUser().then(user => {
+      if (user.uid) {
+        console.log(user.uid);
+        console.log(restaurantId);
+        firebase.firestore().collection('restaurants').doc(restaurantId).get().then((doc) => {
+          if(doc.exists) {
+            console.log(doc);
+          } else {
+            console.log('doc does not exist');
+            firebase.firestore().collection('restaurants').doc(restaurantId).set({
+              going: [user.uid]
+            }).then((res) => {
+              console.log('User added going');
+              console.log(res);
+
+              //Reload with new data
+            }).catch(err => {
+              console.log(err);
+            });
+          }
+        });
+      } else {
+        console.log('Going: user not logged in');
+        window.location = '/login';
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+    //Check firesore going array -> if null create array with uid
+    //if array exists push uid to array and set firestore
+
   }
 }
 
