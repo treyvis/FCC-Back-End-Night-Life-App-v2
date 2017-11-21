@@ -16,30 +16,24 @@ class App extends Component {
   }
 
   componentWillMount() {
+
     api.init();
+
   }
 
   goingSelected = (restaurantId, restaurantIndex) => {
-    //Going selection
-    console.log(this)
-    console.log(restaurantId, restaurantIndex);
-    api.goingToRestaurant(restaurantId).then(res => {
-    //After going is successful pull again for specific restaurant
-      console.log('going')
-      console.log(res);
+    api.goingToRestaurant(restaurantId).then( res => {
       let restaurants = this.state.restaurants;
       restaurants[restaurantIndex].going = res;
       restaurants[restaurantIndex].userGoing = true;
       this.setState({restaurants});
     }).catch( err => {
-      console.log(err);
+      console.error(err);
     })
-
-    //Set state on restaurant state object
   }
 
   notGoingToRestaurant = (restaurantId, restaurantIndex) => {
-    api.notGoingToRestaurant(restaurantId).then(res => {
+    api.notGoingToRestaurant(restaurantId).then( res => {
       let restaurants = this.state.restaurants;
       restaurants[restaurantIndex].going = res;
       restaurants[restaurantIndex].userGoing = false;
@@ -48,8 +42,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    api.loadSearch().then(res => {
-      console.log(res);
+    api.loadSearch().then( res => {
       this.setState({
         restaurants: res.data,
         search: res.search
@@ -62,8 +55,6 @@ class App extends Component {
   onSearch = (search) => {
     if (search) {
       api.onSearch(search).then( res => {
-        console.log('New search', search);
-        console.log(res);
         this.setState({
           search: res.search,
           restaurants: res.data
@@ -79,7 +70,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('Render called');
     return (
       <BrowserRouter>
         <div className="App">

@@ -11,9 +11,7 @@ const api = {
 
   createUserEmail: (name ,email, password) => {
     return new Promise((resolve, reject) => {
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        console.log(res.uid);
+      firebase.auth().createUserWithEmailAndPassword(email, password).then( res => {
         firebase.firestore().collection('users').doc(res.uid).set({
           uid: res.uid,
           email: email,
@@ -23,13 +21,14 @@ const api = {
         .then(() => {
           resolve('User added');
         })
-        .catch((error) => {
-          reject(error);
+        .catch((err) => {
+          console.error(err);
+          reject(err);
         });
       })
-      .catch(function(error) {
-        console.error(error.code, error.message);
-        reject(error);
+      .catch(function(err) {
+        console.error(err);
+        reject(err);
       });
     });
   },
@@ -71,30 +70,26 @@ const api = {
           let goingRestaurants = res.data.data;
           let callsMade = 0;
           for(const restaurant in res.data.data) {
-            console.log(res.data.data[restaurant].id);
             firebase.firestore().collection('restaurants').doc(res.data.data[restaurant].id).get().then((doc) => {
-                      
+
                 callsMade++;
                 if (doc.exists) {
-                  console.log(doc.data());
                   goingRestaurants[restaurant].going = doc.data().going;
                   if (user.uid && goingRestaurants[restaurant].going.indexOf(user.uid) !== -1) {
                     goingRestaurants[restaurant].userGoing = true;
-                    console.log('user going');
                   }
                 }
-                console.log('callsMade', callsMade);
                 if (callsMade === callsToMake) {
-                  console.log('Calls complete');
-                  console.log(goingRestaurants);
                   resolve(res.data);
                 }
             });
           }
         }).catch(err => {
+          console.error(err);
           reject(err);
         });
       }).catch(err => {
+        console.error(err);
         reject(err);
       })
     });
@@ -108,14 +103,11 @@ const api = {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           firebase.firestore().collection('users').doc(user.uid).update({search: search}).then(res => {
-            console.log('Search saved');
-            console.log(res);
           })
         } else {
           console.log('No user logged in');
         }
       });
-
       return this.getRestaurants(search);
     }
   },
@@ -132,27 +124,21 @@ const api = {
                 let goingRestaurants = res.data.data;
                 let callsMade = 0;
                 for(const restaurant in res.data.data) {
-                  console.log(res.data.data[restaurant].id);
                   firebase.firestore().collection('restaurants').doc(res.data.data[restaurant].id).get().then((doc) => {
-                      
                       callsMade++;
                       if (doc.exists) {
-                        console.log(doc.data());
                         goingRestaurants[restaurant].going = doc.data().going;
                         if (goingRestaurants[restaurant].going.indexOf(user.uid) !== -1) {
                           goingRestaurants[restaurant].userGoing = true;
-                          console.log('user going');
                         }
                       }
-                      console.log('callsMade', callsMade);
                       if (callsMade === callsToMake) {
-                        console.log('Calls complete');
-                        console.log(goingRestaurants);
                         resolve(res.data);
                       }
                   });
                 }
               }).catch( err => {
+                console.error(err);
                 reject(err);
               });
             } else {
@@ -169,49 +155,35 @@ const api = {
     });
   },
   goingToRestaurant: (restaurantId) => {
-    //check if user is logged in -> if no, then redirect to login
     return new Promise ((resolve, reject) => {
       this.a.getUser().then(user => {
         if (user.uid) {
-          console.log(user.uid);
-          console.log(restaurantId);
           firebase.firestore().collection('restaurants').doc(restaurantId).get().then((doc) => {
             if(doc.exists) {
-              console.log(doc.data());
-
               let restaurantData = doc.data();
               restaurantData.going.push(user.uid);
-              console.log(restaurantData);
               firebase.firestore().collection('restaurants').doc(restaurantId).set(restaurantData).then(res => {
-                console.log('user added to going');
-                console.log(res);
                 resolve(restaurantData.going);
               }).catch(err => {
-                console.log(err);
+                console.error(err);
               });
 
             } else {
-              console.log('doc does not exist');
               firebase.firestore().collection('restaurants').doc(restaurantId).set({
                 going: [user.uid]
               }).then((res) => {
-                console.log('User added going');
-                console.log(res);
                 resolve([user.uid]);
-  
-                //Reload with new data
               }).catch(err => {
-                console.log(err);
+                console.error(err);
                 reject(err);
               });
             }
           });
         } else {
-          console.log('Going: user not logged in');
           window.location = '/login';
         }
       }).catch(err => {
-        console.log(err);
+        console.error(err);
         reject(err);
       });
     })
@@ -230,21 +202,19 @@ const api = {
               firebase.firestore().collection('restaurants').doc(restaurantId).set({
                 going: going
               }).then(res => {
-                console.log(res);
-                console.log(going);
                 resolve(going);
               }).catch(err => {
-                console.log(err);
+                console.error(err);
                 reject(err);
               }); 
             }
           }
         }).catch(err => {
-          console.log(err);
+          console.error(err);
           reject(err);
         });
       }).catch(err => {
-        console.log(err);
+        console.error(err);
         reject(err);
       })
     });

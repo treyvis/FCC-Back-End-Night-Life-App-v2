@@ -7,10 +7,7 @@ const { Sider, Content } = Layout;
 
 class List extends Component {
   render() {
-    console.log('Restaurants',this.props.restaurants.length);
-
     const restaurantCards = this.props.restaurants.map((restaurant, index) => {
-      console.log(restaurant);
       return (
         <Card title={restaurant.name} key={restaurant.id} extra={<a href={restaurant.url} target='_blank'>See in Yelp</a>} style={{ 
           maxWidth: 800, 
