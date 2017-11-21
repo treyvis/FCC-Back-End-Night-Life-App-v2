@@ -65,7 +65,7 @@ const api = {
 
     return new Promise ((resolve, reject) => {
       this.getUser().then(user => {
-        axios.get('http://localhost:3001/api/' + search).then(res => {
+        axios.get('/api/' + search).then(res => {
           const callsToMake = res.data.data.length;
           let goingRestaurants = res.data.data;
           let callsMade = 0;
@@ -119,7 +119,7 @@ const api = {
           firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
             if (doc.exists) {
               const userSearch = doc.data()['search'] ? doc.data()['search'] : 'Salt Lake City';
-              axios.get('http://localhost:3001/api/' + userSearch).then( res => {
+              axios.get('/api/' + userSearch).then( res => {
                 const callsToMake = res.data.data.length;
                 let goingRestaurants = res.data.data;
                 let callsMade = 0;
