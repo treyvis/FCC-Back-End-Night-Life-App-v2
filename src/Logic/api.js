@@ -170,7 +170,7 @@ const api = {
   },
   goingToRestaurant: (restaurantId) => {
     //check if user is logged in -> if no, then redirect to login
-    //return new Promise ((resolve, reject) => {
+    return new Promise ((resolve, reject) => {
       this.a.getUser().then(user => {
         if (user.uid) {
           console.log(user.uid);
@@ -178,18 +178,18 @@ const api = {
           firebase.firestore().collection('restaurants').doc(restaurantId).get().then((doc) => {
             if(doc.exists) {
               console.log(doc.data());
-              //copy data from doc
+
               let restaurantData = doc.data();
               restaurantData.going.push(user.uid);
               console.log(restaurantData);
               firebase.firestore().collection('restaurants').doc(restaurantId).set(restaurantData).then(res => {
                 console.log('user added to going');
                 console.log(res);
+                resolve(restaurantData.going);
               }).catch(err => {
                 console.log(err);
-              })
-              //push new user onto going
-              //set table
+              });
+
             } else {
               console.log('doc does not exist');
               firebase.firestore().collection('restaurants').doc(restaurantId).set({
@@ -197,10 +197,12 @@ const api = {
               }).then((res) => {
                 console.log('User added going');
                 console.log(res);
+                resolve([user.uid]);
   
                 //Reload with new data
               }).catch(err => {
                 console.log(err);
+                reject(err);
               });
             }
           });
@@ -210,8 +212,9 @@ const api = {
         }
       }).catch(err => {
         console.log(err);
+        reject(err);
       });
-    //})
+    })
   }
 }
 

@@ -19,9 +19,22 @@ class App extends Component {
     api.init();
   }
 
-  goingSelected(restaurantId, restaurantIndex) {
+  goingSelected = (restaurantId, restaurantIndex) => {
     //Going selection
+    console.log(this)
+    console.log(restaurantId, restaurantIndex);
+    api.goingToRestaurant(restaurantId).then(res => {
     //After going is successful pull again for specific restaurant
+      console.log('going')
+      console.log(res);
+      let restaurants = this.state.restaurants;
+      restaurants[restaurantIndex].going = res;
+      restaurants[restaurantIndex].userGoing = true;
+      this.setState({restaurants});
+    }).catch( err => {
+      console.log(err);
+    })
+
     //Set state on restaurant state object
   }
 
@@ -71,7 +84,8 @@ class App extends Component {
                   restaurants={this.state.restaurants} 
                   search={this.state.search} 
                   onSearch={this.onSearch}
-                  onSearchChange={this.onSearchChange}/>
+                  onSearchChange={this.onSearchChange}
+                  goingSelected={this.goingSelected} />
               );
             }} />
           </Switch>

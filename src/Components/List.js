@@ -9,7 +9,7 @@ class List extends Component {
   render() {
     console.log('Restaurants',this.props.restaurants.length);
 
-    const restaurantCards = this.props.restaurants.map(restaurant => {
+    const restaurantCards = this.props.restaurants.map((restaurant, index) => {
       console.log(restaurant);
       return (
         <Card title={restaurant.name} key={restaurant.id} extra={<a href={restaurant.url} target='_blank'>See in Yelp</a>} style={{ 
@@ -54,7 +54,7 @@ class List extends Component {
                   if (restaurant.userGoing) {
                     return <Button type="danger">Not Going!</Button>;
                   } else {
-                    return <Button type="primary" onClick={() => { api.goingToRestaurant(restaurant.id)}}>Going!</Button>;
+                    return <Button type="primary" onClick={() => { this.props.goingSelected(restaurant.id, index)}}>Going!</Button>;
                   }
                 })()}
               </h3>
