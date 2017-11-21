@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Layout, Card, Input, Icon, Button } from 'antd';
-import api from '../Logic/api.js';
 const Search = Input.Search;
 const { Sider, Content } = Layout;
 
