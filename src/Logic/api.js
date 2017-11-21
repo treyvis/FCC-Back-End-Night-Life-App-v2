@@ -215,6 +215,39 @@ const api = {
         reject(err);
       });
     })
+  },
+  notGoingToRestaurant: function(restaurantId) {
+
+    return new Promise((resolve, reject) => {
+      this.getUser().then(user => {
+        //fetch going array
+        firebase.firestore().collection('restaurants').doc(restaurantId).get().then(doc => {
+          if (doc.exists) {
+            let going = doc.data().going;
+            let userIndex = going.indexOf(user.uid);
+            if (userIndex !== -1) {
+              going.splice(userIndex, 1);
+              firebase.firestore().collection('restaurants').doc(restaurantId).set({
+                going: going
+              }).then(res => {
+                console.log(res);
+                console.log(going);
+                resolve(going);
+              }).catch(err => {
+                console.log(err);
+                reject(err);
+              }); 
+            }
+          }
+        }).catch(err => {
+          console.log(err);
+          reject(err);
+        });
+      }).catch(err => {
+        console.log(err);
+        reject(err);
+      })
+    });
   }
 }
 

@@ -52,7 +52,7 @@ class List extends Component {
                 <br/>
                 {(() => {
                   if (restaurant.userGoing) {
-                    return <Button type="danger">Not Going!</Button>;
+                    return <Button type="danger" onClick={() => { this.props.notGoingToRestaurant(restaurant.id, index) }}>Not Going!</Button>;
                   } else {
                     return <Button type="primary" onClick={() => { this.props.goingSelected(restaurant.id, index)}}>Going!</Button>;
                   }

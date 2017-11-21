@@ -38,6 +38,15 @@ class App extends Component {
     //Set state on restaurant state object
   }
 
+  notGoingToRestaurant = (restaurantId, restaurantIndex) => {
+    api.notGoingToRestaurant(restaurantId).then(res => {
+      let restaurants = this.state.restaurants;
+      restaurants[restaurantIndex].going = res;
+      restaurants[restaurantIndex].userGoing = false;
+      this.setState({restaurants});
+    });
+  }
+
   componentDidMount() {
     api.loadSearch().then(res => {
       console.log(res);
@@ -85,7 +94,8 @@ class App extends Component {
                   search={this.state.search} 
                   onSearch={this.onSearch}
                   onSearchChange={this.onSearchChange}
-                  goingSelected={this.goingSelected} />
+                  goingSelected={this.goingSelected} 
+                  notGoingToRestaurant={this.notGoingToRestaurant}/>
               );
             }} />
           </Switch>
