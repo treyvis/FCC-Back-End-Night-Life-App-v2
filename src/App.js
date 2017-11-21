@@ -16,9 +16,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-
     api.init();
-
   }
 
   goingSelected = (restaurantId, restaurantIndex) => {

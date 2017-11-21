@@ -118,8 +118,8 @@ const api = {
         if (user) {
           firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
             if (doc.exists) {
-
-              axios.get('http://localhost:3001/api/' + doc.data()['search']).then( res => {
+              const userSearch = doc.data()['search'] ? doc.data()['search'] : 'Salt Lake City';
+              axios.get('http://localhost:3001/api/' + userSearch).then( res => {
                 const callsToMake = res.data.data.length;
                 let goingRestaurants = res.data.data;
                 let callsMade = 0;
