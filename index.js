@@ -1,10 +1,13 @@
 const express = require('express');
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 const path = require('path');
 const axios = require('axios');
-const config = require('./src/server/config.js');
-const yelp = axios.create({headers: {'Authorization':'Bearer ' + config.yelpToken}});
+//const config = require('./src/server/config.js');
+const yelpToken = process.env.YELP_TOKEN;
+console.log(yelpToken);
+const yelp = axios.create({headers: {'Authorization':'Bearer ' + yelpToken}});
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -21,8 +24,6 @@ app.get('/api/:location', (req,res) => {
   })
 });
 
-const port = 3000;
-
-app.listen(port, () => {
-  console.log('Listening on', port);
+app.listen(PORT, () => {
+  console.log('Listening on', PORT);
 });
