@@ -5,7 +5,7 @@ import api from '../Logic/api.js';
 
 class Nav extends Component {
   state = {
-    current: 'home',
+    current: '',
     email: ''
   }
 
